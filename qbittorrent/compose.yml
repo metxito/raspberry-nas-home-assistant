@@ -1,0 +1,25 @@
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      #- PGID=1000
+      #- PUID=1000
+      - QBT_EULA=accept
+      - QBT_VERSION=latest
+      #- QBT_LEGAL_NOTICE=confirm
+      - QBT_WEBUI_PORT=8081
+      - TZ=Europe/Zurich
+    image: qbittorrentofficial/qbittorrent-nox:latest
+    ports:
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 8081:8081/tcp
+    read_only: true
+    stop_grace_period: 30m
+    tmpfs:
+      - /tmp
+    tty: true
+    volumes:
+      - /dockerdata/qbittorrent/appdata:/config
+      - /home/metxw/downloads:/downloads
